@@ -1,2 +1,2 @@
 # Game of life core logic
-Simple implementation of game logic in Game of Life
+Simple implementation of the game logic in John Conway's [Game of Life](https://bitstorm.org/gameoflife/).
