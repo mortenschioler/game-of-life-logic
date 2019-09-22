@@ -87,3 +87,14 @@
   []
   (tick!)
   (show!))
+
+(defn replay!
+  [history]
+  (dorun 
+    (map 
+      (comp println format-board) 
+      history)))
+
+(defn demo!
+  []
+  (replay! (take 300 (iterate transform-board (random-board [30 30])))))
