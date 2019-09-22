@@ -40,3 +40,50 @@
        (update-in acc [x y :alive] lives? (crowdedness board [x y])))
      board
      (for [x (range X) y (range Y)] [x y]))))
+
+(defn format-board
+  [board]
+  (reduce 
+    (fn [acc row]
+      (str 
+        acc 
+        (->> row
+             ;; \u2588 is a "full block"
+             (map #(if (:alive %) "\u2588\u2588" "  " ))
+             (apply str))
+        "\n"))
+    ""
+    board))
+
+(defn random-cell
+  []
+  {:alive (> (rand) 0.5)})
+
+(def repeatedlyv
+  (comp vec repeatedly))
+
+(defn random-board
+  [[X Y]]
+  (repeatedlyv X #(repeatedlyv Y random-cell)))
+
+(def board
+  (atom nil))
+
+(defn new!
+  [dims]
+  (reset! board (random-board dims))
+  nil)
+
+(defn tick!
+  []
+  (swap! board transform-board)
+  nil)
+
+(defn show!
+  []
+  (println (format-board @board)))
+
+(defn tick!!
+  []
+  (tick!)
+  (show!))
